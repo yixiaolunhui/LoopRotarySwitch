@@ -4,7 +4,7 @@
 仅使用三角函数,使用ValueAnimation,继承FrameLayout.兼容所有滑动组件
 
 ## 效果图
-![image](https://github.com/dalong982242260/RotaryBallLoadingProgressDialog1.0/blob/master/img/dalong.gif)
+![image](https://github.com/dalong982242260/LoopRotarySwitch/blob/master/img/dalong.gif)
 
 ##优势
 *1.3d旋转GrallyView<br />
