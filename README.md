@@ -16,7 +16,7 @@
         `android:id="@+id/mLoopRotarySwitchView"` <br />
         `android:layout_width="fill_parent"` <br />
         `android:gravity="center_vertical"` <br />
-        `android:layout_height="fill_parent"/>` <br />
+        `android:layout_height="fill_parent">` <br />
   <!--  此处添加你的View元素，也可以用layout包裹 --!><br />
        `<include android:id="@+id/item1" layout="@layout/item_view0"></include>` <br />
        `<include android:id="@+id/item2" layout="@layout/item_view1"></include>` <br />
