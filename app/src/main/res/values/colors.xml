@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- 我的三个圆 -->
+    <color name="point1">#e03f99f6</color>
+    <color name="point2">#e098bf50</color>
+    <color name="point3">#e0f67b7b</color>
+    <color name="white">#fffffffb</color>
+
+</resources>
