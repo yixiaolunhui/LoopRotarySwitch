@@ -1,18 +1,15 @@
 package com.example.looprotaryswitch;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.looprotaryswitch.view.LoopRotarySwitchView;
+import com.example.looprotaryswitch.view.OnItemSelectedListener;
+import com.example.looprotaryswitch.view.OnLoopViewTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
     private LoopRotarySwitchView mLoopRotarySwitchView;
 
     private List<View> views;
+    
+    private boolean isCanClick;
+
+    private float x;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +53,13 @@ public class MainActivity extends AppCompatActivity {
         views.add(view2);
         for (int i=0;i<views.size();i++){
             final int finalI = i;
+            /**
+             * view点击事件
+             */
             views.get(i).findViewById(R.id.loopView_rel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mLoopRotarySwitchView.getSelectItem()!=finalI){
-                        mLoopRotarySwitchView.setSelectItem(finalI);
-                    }else{
+                    if(isCanClick){
                         Toast.makeText(MainActivity.this, "i="+finalI, Toast.LENGTH_SHORT).show();
                     }
 
@@ -66,6 +69,40 @@ public class MainActivity extends AppCompatActivity {
         }
         mLoopRotarySwitchView.setMultiple(3.5f);
         mLoopRotarySwitchView.setR(300);
+
+        /**
+         * 选中回调
+         */
+        mLoopRotarySwitchView.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void selected(int position, View view) {
+                isCanClick = true;
+            }
+        });
+
+        /**
+         * 触摸回调
+         */
+        mLoopRotarySwitchView.setOnLoopViewTouchListener(new OnLoopViewTouchListener() {
+            @Override
+            public void onTouch(MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        x = event.getX();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        if (event.getX() - x > 20 || x - event.getX() > 20) {
+                            isCanClick = false;
+                        } else {
+                            isCanClick = true;
+                        }
+                        break;
+                }
+            }
+        });
 
     }
 
