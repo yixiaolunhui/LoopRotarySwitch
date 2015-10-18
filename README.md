@@ -11,6 +11,7 @@
 *2.支持自动旋转<br />
 *3.可直接在xml添加元素即可添加列数据。也可以动态代码添加view<br />
 *4.优良的兼容性，和可以自己尺寸控制<br />
+*5.添加了点击切换和点击中间监听，适合目前app的需求<br />
 ##如何使用？
  `<com.example.looprotaryswitch.view.LoopRotarySwitchView `<br />
         `android:id="@+id/mLoopRotarySwitchView"` <br />
