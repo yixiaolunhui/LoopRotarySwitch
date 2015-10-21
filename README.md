@@ -1,5 +1,5 @@
 #介绍
-1: LoopRotarySwitchView<br />
+1: LoopRotarySwitchView2.0<br />
 可以无限循环，自动旋转，停靠的3D旋转布局控件,无需编写代码，直接在布局中加入自己的布局即可。<br />
 仅使用三角函数,使用ValueAnimation,继承FrameLayout.兼容所有滑动组件
 
@@ -12,6 +12,7 @@
 *3.可直接在xml添加元素即可添加列数据。也可以动态代码添加view<br />
 *4.优良的兼容性，和可以自己尺寸控制<br />
 *5.添加了点击切换和点击中间监听，适合目前app的需求<br />
+*6.优化控件点击切换效果，使用更加的方法实用<br />
 ##如何使用？
  `<com.example.looprotaryswitch.view.LoopRotarySwitchView `<br />
         `android:id="@+id/mLoopRotarySwitchView"` <br />
