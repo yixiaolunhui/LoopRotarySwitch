@@ -26,6 +26,7 @@
        `...............`<br />
  `</com.example.looprotaryswitch.view.LoopRotarySwitchView>`` <br />
  
+ 
  或者直接代码添加  LoopRotarySwitchView.addView(view);<br />
  
  
