@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.looprotaryswitch.view.LoopRotarySwitchView;
+import com.example.looprotaryswitch.view.OnItemClickListener;
 import com.example.looprotaryswitch.view.OnItemSelectedListener;
 import com.example.looprotaryswitch.view.OnLoopViewTouchListener;
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private LoopRotarySwitchView mLoopRotarySwitchView;
 
     private List<View> views;
-    
+
     private boolean isCanClick;
 
     private float x;
@@ -52,19 +53,6 @@ public class MainActivity extends AppCompatActivity {
         views.add(view1);
         views.add(view2);
         for (int i=0;i<views.size();i++){
-            final int finalI = i;
-            /**
-             * view点击事件
-             */
-            views.get(i).findViewById(R.id.loopView_rel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(isCanClick){
-                        Toast.makeText(MainActivity.this, "i="+finalI, Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            });
             mLoopRotarySwitchView.addView(views.get(i));
         }
         mLoopRotarySwitchView.setMultiple(3.5f);
@@ -76,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mLoopRotarySwitchView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void selected(int position, View view) {
-                isCanClick = true;
+                Toast.makeText(MainActivity.this, "setOnItemSelectedListener－－－i="+position, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -86,24 +74,17 @@ public class MainActivity extends AppCompatActivity {
         mLoopRotarySwitchView.setOnLoopViewTouchListener(new OnLoopViewTouchListener() {
             @Override
             public void onTouch(MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        x = event.getX();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        if (event.getX() - x > 20 || x - event.getX() > 20) {
-                            isCanClick = false;
-                        } else {
-                            isCanClick = true;
-                        }
-                        break;
-                }
             }
         });
-
+        /**
+         * 点击事件
+         */
+        mLoopRotarySwitchView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int item, View view) {
+                Toast.makeText(MainActivity.this, "setOnItemClickListener－－－i="+item, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

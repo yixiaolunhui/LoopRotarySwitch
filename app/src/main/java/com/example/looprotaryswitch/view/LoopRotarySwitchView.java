@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,6 +57,11 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     private OnItemClickListener onItemClickListener = null;//被点击的回调
 
+    private boolean isCanClickListener=true;//是否可以点击回调
+
+    private float x;//移动的x是否符合回调点击事件
+
+    private float limitX=30;//滑动倒最低30
 
     /**
      * 构造方法
@@ -123,7 +129,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
         Collections.sort(list, comp);
         for (int i = 0; i < list.size(); i++) {
             list.get(i).bringToFront();
-            list.get(i).setEnabled(i == (list.size() - 1) && angle % (360 / size) == 0 ? true : false);
+//            list.get(i).setEnabled(i == (list.size() - 1) && angle % (360 / size) == 0 ? true : false);
         }
     }
 
@@ -224,6 +230,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
     public void InitData() {
         initView();
         if (onItemSelectedListener != null) {
+            isCanClickListener = true;
             onItemSelectedListener.selected(selectItem, views.get(selectItem));
         }
 
@@ -240,6 +247,19 @@ public class LoopRotarySwitchView extends RelativeLayout {
         size = count;
         for (int i = 0; i < count; i++) {
             views.add(getChildAt(i));
+            final int finalI = i;
+            getChildAt(i).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.v("888888","isCanClickListener--"+isCanClickListener);
+                    if (calculateItem() != finalI) {
+                        setSelectItem(finalI);
+                    }else{
+                        if(isCanClickListener)
+                            onItemClickListener.onItemClick(finalI, views.get(finalI));
+                    }
+                }
+            });
         }
     }
 
@@ -398,6 +418,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
         if (onLoopViewTouchListener != null) {
             onLoopViewTouchListener.onTouch(event);
         }
+        isCanClickListener(event);
         return true;
     }
 
@@ -411,9 +432,31 @@ public class LoopRotarySwitchView extends RelativeLayout {
         if (onLoopViewTouchListener != null) {
             onLoopViewTouchListener.onTouch(ev);
         }
+        isCanClickListener(ev);
         return super.dispatchTouchEvent(ev);
     }
 
+    /**
+     * 是否可以点击回调
+     * @param event
+     */
+    public void  isCanClickListener(MotionEvent event){
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x = event.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                if (event.getX() - x > limitX || x - event.getX() > limitX) {
+                    isCanClickListener = false;
+                } else {
+                    isCanClickListener = true;
+                }
+                break;
+        }
+    }
     /**
      * 获取所有的view
      *
@@ -484,12 +527,6 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param selectItem
      */
     public void setSelectItem(int selectItem) {
-        if (getSelectItem() == selectItem) {
-            if (onItemClickListener != null) {
-                onItemClickListener.onItemClick(selectItem, views.get(selectItem));
-            }
-            return;
-        }
 
         if (selectItem >= 0) {
             float jiaodu = 0;
