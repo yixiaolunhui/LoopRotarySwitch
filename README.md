@@ -15,20 +15,12 @@
 *6.优化控件点击切换效果，使用更加的方法实用<br />
 
 ## 如何使用
- <com.example.looprotaryswitch.view.LoopRotarySwitchView<br />
-        android:id="@+id/mLoopRotarySwitchView" <br />
-        android:layout_width="fill_parent" <br />
-        android:gravity="center_vertical"<br />
-        android:layout_height="fill_parent"> <br />
-        
-  <!--  此处添加你的View元素，也可以用layout包裹 --!><br />
-       <include android:id="@+id/item1" layout="@layout/item_view0"></include><br />
-       <include android:id="@+id/item2" layout="@layout/item_view1"></include> <br />
-       <include android:id="@+id/item3" layout="@layout/item_view2"></include> <br />
-       
- </com.example.looprotaryswitch.view.LoopRotarySwitchView> <br />
- 
- 或者直接代码添加  LoopRotarySwitchView.addView(view);<br />
+
+  <com.dalong.library.view.LoopRotarySwitchView
+        android:id="@+id/mLoopRotarySwitchView"
+        android:layout_width="fill_parent"
+        android:gravity="center_vertical"
+        android:layout_height="fill_parent"/>
  
   配置view <br />
     mLoopRotarySwitchView.setMultiple(1f)                      
