@@ -25,18 +25,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:text="总资产(元)"/>
+                android:textSize="45sp"
+                android:text="我"/>
 
-            <TextView
-                android:id="@+id/loopView0_tv2"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text=""
-                android:textSize="16sp"
-                />
         </LinearLayout>
     </RelativeLayout>
 

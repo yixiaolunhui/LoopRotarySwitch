@@ -1,4 +1,4 @@
-package com.example.looprotaryswitch.view;
+package com.dalong.library.view;
 
 import android.os.Handler;
 import android.os.Message;

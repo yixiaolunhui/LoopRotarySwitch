@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <com.example.looprotaryswitch.view.LoopRotarySwitchView
+    <com.dalong.library.view.LoopRotarySwitchView
         android:id="@+id/mLoopRotarySwitchView"
         android:layout_width="fill_parent"
         android:gravity="center_vertical"

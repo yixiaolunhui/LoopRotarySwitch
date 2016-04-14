@@ -1,4 +1,4 @@
-package com.example.looprotaryswitch.view;
+package com.dalong.library.listener;
 
 import android.view.View;
 
@@ -6,5 +6,5 @@ import android.view.View;
  * 选择回调接口
  */
 public interface OnItemSelectedListener {
-    public void selected(int item, View view);
+     void selected(int item, View view);
 }

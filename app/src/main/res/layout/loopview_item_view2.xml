@@ -23,18 +23,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="45sp"
                 android:gravity="center"
-                android:text="昨日收益(元)" />
+                android:text="你" />
 
-            <TextView
-                android:id="@+id/loopView2_tv2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:text="" />
 
         </LinearLayout>
 

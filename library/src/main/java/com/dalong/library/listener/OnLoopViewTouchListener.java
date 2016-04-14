@@ -1,4 +1,4 @@
-package com.example.looprotaryswitch.view;
+package com.dalong.library.listener;
 
 import android.view.MotionEvent;
 
@@ -6,5 +6,5 @@ import android.view.MotionEvent;
  * 选择回调接口
  */
 public interface OnLoopViewTouchListener {
-    public void onTouch(MotionEvent event);
+     void onTouch(MotionEvent event);
 }

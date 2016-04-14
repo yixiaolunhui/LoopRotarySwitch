@@ -1,4 +1,4 @@
-package com.example.looprotaryswitch.view;
+package com.dalong.library.view;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -10,6 +10,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
+
+import com.dalong.library.listener.OnItemClickListener;
+import com.dalong.library.listener.OnItemSelectedListener;
+import com.dalong.library.listener.OnLoopViewTouchListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -580,9 +584,10 @@ public class LoopRotarySwitchView extends RelativeLayout {
      *
      * @param r
      */
-    public void setR(float r) {
+    public LoopRotarySwitchView setR(float r) {
         this.r = r;
         distance = BEISHU * r;
+        return  this;
     }
 
     /**
@@ -617,9 +622,10 @@ public class LoopRotarySwitchView extends RelativeLayout {
      *
      * @param autoRotation
      */
-    public void setAutoRotation(boolean autoRotation) {
+    public LoopRotarySwitchView setAutoRotation(boolean autoRotation) {
         this.autoRotation = autoRotation;
         loopHandler.setLoop(autoRotation);
+        return this;
     }
 
     /**
@@ -636,8 +642,9 @@ public class LoopRotarySwitchView extends RelativeLayout {
      *
      * @param autoRotationTime
      */
-    public void setAutoRotationTime(long autoRotationTime) {
+    public LoopRotarySwitchView setAutoRotationTime(long autoRotationTime) {
         loopHandler.setLoopTime(autoRotationTime);
+        return this;
     }
 
     /**
@@ -655,7 +662,8 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param mMultiple 设置这个必须在setR之前调用，否则无效
      * @return
      */
-    public void setMultiple(float mMultiple) {
+    public LoopRotarySwitchView setMultiple(float mMultiple) {
         this.BEISHU = mMultiple;
+        return this;
     }
 }
