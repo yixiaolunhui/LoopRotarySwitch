@@ -16,7 +16,7 @@
 
 ## 如何使用
 
-  <com.dalong.library.view.LoopRotarySwitchView <br />
+<com.dalong.library.view.LoopRotarySwitchView<br />
         android:id="@+id/mLoopRotarySwitchView"<br />
         android:layout_width="fill_parent" <br />
         android:gravity="center_vertical"<br />
