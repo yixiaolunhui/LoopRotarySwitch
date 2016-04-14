@@ -16,13 +16,13 @@
 
 ## 如何使用
 
-  <com.dalong.library.view.LoopRotarySwitchView
-        android:id="@+id/mLoopRotarySwitchView"
-        android:layout_width="fill_parent"
-        android:gravity="center_vertical"
-        android:layout_height="fill_parent"/>
+  <com.dalong.library.view.LoopRotarySwitchView <br />
+        android:id="@+id/mLoopRotarySwitchView"<br />
+        android:layout_width="fill_parent" <br />
+        android:gravity="center_vertical"<br />
+        android:layout_height="fill_parent"/><br />
  
-  配置view <br />
+## 配置view 
     mLoopRotarySwitchView.setMultiple(1f)                      
             .setR(width/3+20)//设置R的大小                          
             .setAutoRotation(false)//是否自动切换                    
