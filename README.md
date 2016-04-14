@@ -14,7 +14,7 @@
 *5.添加了点击切换和点击中间监听，适合目前app的需求<br />
 *6.优化控件点击切换效果，使用更加的方法实用<br />
 
-##如何使用？
+## 如何使用
  <com.example.looprotaryswitch.view.LoopRotarySwitchView<br />
         android:id="@+id/mLoopRotarySwitchView" <br />
         android:layout_width="fill_parent" <br />
@@ -28,12 +28,9 @@
        
  </com.example.looprotaryswitch.view.LoopRotarySwitchView> <br />
  
- 
  或者直接代码添加  LoopRotarySwitchView.addView(view);<br />
  
- 
- 
- ##配置view
+  配置view <br />
     mLoopRotarySwitchView.setMultiple(1f)                      
             .setR(width/3+20)//设置R的大小                          
             .setAutoRotation(false)//是否自动切换                    
