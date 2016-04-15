@@ -19,18 +19,18 @@
 
 在你的项目Gradle 添加
 
-dependencies {
-     compile 'com.dalong:loopview:1.0.0'
-}
+dependencies {<br />
+     compile 'com.dalong:loopview:1.0.0'<br />
+}<br />
 
-后者直接引入库文件
+后者直接引入库文件<br />
  
  
 ## 配置view 
-   mLoopRotarySwitchView
-                  .setR(350)//设置R的大小
-                  .setAutoRotation(false)//是否自动切换
-                  .setAutoRotationTime(2000);//自动切换的时间  单位毫秒       
+   mLoopRotarySwitchView<br />
+                  .setR(350)//设置R的大小<br />
+                  .setAutoRotation(false)//是否自动切换<br />
+                  .setAutoRotationTime(2000);//自动切换的时间  单位毫秒  <br />     
  
  
  
