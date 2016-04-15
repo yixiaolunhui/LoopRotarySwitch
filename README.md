@@ -16,17 +16,21 @@
 
 ## 如何使用
 
-<com.dalong.library.view.LoopRotarySwitchView<br />
-        android:id="@+id/mLoopRotarySwitchView"<br />
-        android:layout_width="fill_parent" <br />
-        android:gravity="center_vertical"<br />
-        android:layout_height="fill_parent"/><br />
+
+在你的项目Gradle 添加
+
+dependencies {
+     compile 'com.dalong:loopview:1.0.0'
+}
+
+后者直接引入库文件
+ 
  
 ## 配置view 
-    mLoopRotarySwitchView.setMultiple(1f)                      
-            .setR(width/3+20)//设置R的大小                          
-            .setAutoRotation(false)//是否自动切换                    
-            .setAutoRotationTime(2000);//自动切换的时间  单位毫秒         
+   mLoopRotarySwitchView
+                  .setR(350)//设置R的大小
+                  .setAutoRotation(false)//是否自动切换
+                  .setAutoRotationTime(2000);//自动切换的时间  单位毫秒       
  
  
  
