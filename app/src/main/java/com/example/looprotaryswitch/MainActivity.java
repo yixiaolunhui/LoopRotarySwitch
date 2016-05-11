@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)//切换方向
                 .setAutoRotationTime(2000);//自动切换的时间  单位毫秒
         mLoopRotarySwitchView3
-                .setR(width/3)//设置R的大小
+                .setR(width/5)//设置R的大小
                 .setAutoRotation(true)//是否自动切换
                 .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)//切换方向
                 .setAutoRotationTime(2000);//自动切换的时间  单位毫秒
