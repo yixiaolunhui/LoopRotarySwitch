@@ -5,10 +5,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <!-- 我的4个圆 -->
-    <color name="point1">#e03f99f6</color>
-    <color name="point2">#e098bf50</color>
-    <color name="point3">#e0f67b7b</color>
-    <color name="point4">#e0FF4081</color>
+    <color name="point1">#803f99f6</color>
+    <color name="point2">#8098bf50</color>
+    <color name="point3">#80f67b7b</color>
+    <color name="point4">#80FF4081</color>
+    <color name="point5">#80303F9F</color>
     <color name="white">#fffffffb</color>
 
 </resources>

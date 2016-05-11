@@ -10,9 +10,9 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
 
     private boolean loop = false;//是否要发送
 
-    public long loopTime = 0;//时间间隔
+    public long loopTime = 3000;//时间间隔
 
-    private static final int msgid = 1000;//id
+    public static final int msgid = 1000;//id
 
     private Message msg = createMsg();//创建message
 
@@ -90,6 +90,10 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
      */
     public void setLoopTime(long loopTime) {
         this.loopTime = loopTime;
+    }
+
+    public long getLoopTime() {
+        return loopTime;
     }
 
     /**

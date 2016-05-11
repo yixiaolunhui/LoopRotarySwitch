@@ -73,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initLoopRotarySwitchView() {
         mLoopRotarySwitchView
-                .setR(200)//设置R的大小
-                .setAutoRotation(false)//是否自动切换
+                .setR(300)//设置R的大小
+                .setAutoRotation(true)//是否自动切换
+                .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)
                 .setAutoRotationTime(2000);//自动切换的时间  单位毫秒
     }
 
@@ -98,10 +99,12 @@ public class MainActivity extends AppCompatActivity {
         View view1= LayoutInflater.from(this).inflate(R.layout.loopview_item_view1,null);
         View view2= LayoutInflater.from(this).inflate(R.layout.loopview_item_view2,null);
         View view3= LayoutInflater.from(this).inflate(R.layout.loopview_item_view4,null);
+        View view4= LayoutInflater.from(this).inflate(R.layout.loopview_item_view5,null);
         views.add(view0);
         views.add(view1);
         views.add(view2);
-//        views.add(view3);
+        views.add(view3);
+//        views.add(view4);
         for (int i=0;i<views.size();i++){
             mLoopRotarySwitchView.addView(views.get(i));
         }

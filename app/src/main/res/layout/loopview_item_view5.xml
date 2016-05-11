@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/loopView_rel"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/point5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:id="@+id/loopView2_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="45sp"
+                android:gravity="center"
+                android:text="吗" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_below="@id/loopView_rel"
+        android:layout_centerHorizontal="true"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
+        android:scaleType="fitXY"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:src="@drawable/image_shader"/>
+
+</RelativeLayout>
