@@ -35,7 +35,7 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
         switch (msg.what = msgid) {
             case msgid:
                 if (loop) {
-                    du();
+                    doScroll();
                     sendMsg();
                 }
                 break;
@@ -105,5 +105,5 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
         return loop;
     }
 
-    public abstract void du();
+    public abstract void doScroll();
 }

@@ -141,7 +141,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
      */
     LoopRotarySwitchViewHandler loopHandler = new LoopRotarySwitchViewHandler(3000) {
         @Override
-        public void du() {
+        public void doScroll() {
             try {
                 if (size != 0) {//判断自动滑动从那边开始
                     int perAngle = 0;
