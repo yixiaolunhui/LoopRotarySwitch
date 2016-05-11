@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mLoopRotarySwitchView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void selected(int position, View view) {
-                Toast.makeText(MainActivity.this, "setOnItemSelectedListener－－－i="+position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "setOnItemSelectedListener－－－i="+position, Toast.LENGTH_SHORT).show();
             }
         });
 

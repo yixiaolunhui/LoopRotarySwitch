@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
@@ -10,6 +11,50 @@
         android:id="@+id/mLoopRotarySwitchView"
         android:layout_width="fill_parent"
         android:gravity="center_vertical"
-        android:layout_height="fill_parent"/>
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+    <com.dalong.library.view.LoopRotarySwitchView
+        android:id="@+id/mLoopRotarySwitchView2"
+        android:layout_width="fill_parent"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <include layout="@layout/loopview_item_view0"/>
+        <include layout="@layout/loopview_item_view1"/>
+        <include layout="@layout/loopview_item_view2"/>
+        <include layout="@layout/loopview_item_view4"/>
+    </com.dalong.library.view.LoopRotarySwitchView>
 
+    <com.dalong.library.view.LoopRotarySwitchView
+        android:id="@+id/mLoopRotarySwitchView3"
+        android:layout_width="fill_parent"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+
+        <TextView
+            android:id="@+id/loopView0_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="45sp"
+            android:text="我"/>
+        <TextView
+            android:id="@+id/loopView1_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="45sp"
+            android:gravity="center"
+            android:text="爱" />
+        <TextView
+            android:id="@+id/loopView2_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/point4"
+            android:textSize="45sp"
+            android:gravity="center"
+            android:text="你" />
+    </com.dalong.library.view.LoopRotarySwitchView>
 </LinearLayout>
