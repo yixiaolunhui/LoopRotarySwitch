@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <declare-styleable name="LoopRotarySwitchView">
-      <attr name="orientation" format="integer">
-          <enum name="vertical" value="0"/>
-          <enum name="horizontal" value="1"/>
-      </attr>
-      <attr name="autoRotation" format="boolean"/>
-      <attr name="r" format="dimension"/>
-  </declare-styleable>
+    <declare-styleable name="LoopRotarySwitchView">
+        <attr name="orientation" format="integer">
+            <enum name="vertical" value="0"/>
+            <enum name="horizontal" value="1"/>
+        </attr>
+        <attr name="autoRotation" format="boolean"/>
+        <attr name="r" format="dimension"/>
+
+        <attr name="direction" format="integer">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr>
+
+    </declare-styleable>
 </resources>

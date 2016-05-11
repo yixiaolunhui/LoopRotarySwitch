@@ -119,12 +119,18 @@ public class LoopRotarySwitchView extends RelativeLayout {
         mOrientation=typedArray.getInt(R.styleable.LoopRotarySwitchView_orientation,horizontal);
         autoRotation=typedArray.getBoolean(R.styleable.LoopRotarySwitchView_autoRotation,false);
         r=typedArray.getDimension(R.styleable.LoopRotarySwitchView_r,LoopR);
+        int direction=typedArray.getInt(R.styleable.LoopRotarySwitchView_direction,0);
         typedArray.recycle();
         mGestureDetector = new GestureDetector(context, getGeomeryController());
         if(mOrientation==horizontal){//如果是水平 z值为0  如果是竖直z值为90
             loopRotationZ=0;
         }else{
             loopRotationZ=90;
+        }
+        if(direction==0){//设置自定滚动的方向
+            autoRotatinDirection=AutoScrollDirection.left;
+        }else{
+            autoRotatinDirection=AutoScrollDirection.right;
         }
         loopHandler.setLoop(autoRotation);
     }
