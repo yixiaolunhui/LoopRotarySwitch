@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LoopRotarySwitchView mLoopRotarySwitchView;
+    private LoopRotarySwitchView mLoopRotarySwitchView,mLoopRotarySwitchView2,mLoopRotarySwitchView3;
 
     private List<View> views;
 
@@ -73,7 +73,17 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initLoopRotarySwitchView() {
         mLoopRotarySwitchView
-                .setR(300)//设置R的大小
+                .setR(width/3)//设置R的大小
+                .setAutoRotation(true)//是否自动切换
+                .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)//切换方向
+                .setAutoRotationTime(2000);//自动切换的时间  单位毫秒
+        mLoopRotarySwitchView2
+                .setR(width/3)//设置R的大小
+                .setAutoRotation(true)//是否自动切换
+                .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)//切换方向
+                .setAutoRotationTime(2000);//自动切换的时间  单位毫秒
+        mLoopRotarySwitchView3
+                .setR(width/3)//设置R的大小
                 .setAutoRotation(true)//是否自动切换
                 .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)//切换方向
                 .setAutoRotationTime(2000);//自动切换的时间  单位毫秒
@@ -84,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initView() {
         mLoopRotarySwitchView=(LoopRotarySwitchView)findViewById(R.id.mLoopRotarySwitchView);
+        mLoopRotarySwitchView2=(LoopRotarySwitchView)findViewById(R.id.mLoopRotarySwitchView2);
+        mLoopRotarySwitchView3=(LoopRotarySwitchView)findViewById(R.id.mLoopRotarySwitchView3);
         DisplayMetrics dm = new DisplayMetrics();
         WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(dm);

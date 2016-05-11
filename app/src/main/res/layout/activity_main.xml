@@ -19,10 +19,22 @@
         android:gravity="center_vertical"
         android:layout_weight="1"
         android:layout_height="0dp">
-        <include layout="@layout/loopview_item_view0"/>
-        <include layout="@layout/loopview_item_view1"/>
-        <include layout="@layout/loopview_item_view2"/>
-        <include layout="@layout/loopview_item_view4"/>
+       <ImageView
+           android:src="@mipmap/image1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+       <ImageView
+           android:src="@mipmap/image2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+       <ImageView
+           android:src="@mipmap/image3"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+       <ImageView
+           android:src="@mipmap/image4"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
     </com.dalong.library.view.LoopRotarySwitchView>
 
     <com.dalong.library.view.LoopRotarySwitchView
