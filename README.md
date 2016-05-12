@@ -1,5 +1,5 @@
 #介绍
-1: LoopRotarySwitchView1.0<br />
+1: LoopRotarySwitchView<br />
 可以无限循环，自动旋转，停靠的3D旋转布局控件,无需编写代码，直接在布局中加入自己的布局即可。<br />
 控件继承相对布局RelativeLayout直接可以当做布局使用。
 
@@ -19,12 +19,14 @@
 
 在你的项目Gradle 添加
 
-     compile 'com.dalong:loopview:1.0.1'
+     compile 'com.dalong:loopview:1.0.2'
 
+或者直接引入库文件
 
-后者直接引入库文件
  
- 
+## 1.0.2版本
+ 1、增加方向设置.
+  
 ## 1.0.1版本
  1、优化代码。
  2、增加自动旋转方向设置
@@ -35,6 +37,36 @@
  3、点击3d切换，触摸滑动3d切换
  
 ## 配置view 
+
+布局xml里：
+
+        <com.dalong.library.view.LoopRotarySwitchView
+                android:id="@+id/mLoopRotarySwitchView"
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                app:direction="right"
+                android:layout_height="0dp">
+                <ImageView
+                    android:src="@mipmap/image1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:src="@mipmap/image2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:src="@mipmap/image3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:src="@mipmap/image4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </com.dalong.library.view.LoopRotarySwitchView>
+            
+            
+ 代码设置：
     mLoopRotarySwitchView
                    .setR(300)//设置R的大小
                    .setAutoRotation(true)//是否自动切换
