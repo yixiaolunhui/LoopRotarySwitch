@@ -4,6 +4,7 @@
     控件继承相对布局RelativeLayout直接可以当做布局使用。
 
 ## 效果图
+
 ![image](https://github.com/dalong982242260/LoopRotarySwitch/blob/master/img/dalong.gif)
 
 ##优势
