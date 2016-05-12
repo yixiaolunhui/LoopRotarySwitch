@@ -67,6 +67,7 @@
             
             
  代码设置：
+ 
     mLoopRotarySwitchView
                    .setR(300)//设置R的大小
                    .setAutoRotation(true)//是否自动切换
