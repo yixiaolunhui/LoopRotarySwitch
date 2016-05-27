@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -309,8 +310,11 @@ public class LoopRotarySwitchView extends RelativeLayout {
             view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    Log.v("888888","position:"+position);
+                    Log.v("888888","selectItem:"+selectItem);
                     //对子view添加点击事件
-                    if (position != calculateItem()) {
+                    if (position != selectItem) {
                         setSelectItem(position);
                     }else {
                         if (isCanClickListener && onItemClickListener != null) {
