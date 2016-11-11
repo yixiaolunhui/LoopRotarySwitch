@@ -5,7 +5,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -134,8 +133,8 @@ public class LoopRotarySwitchView extends RelativeLayout {
             autoRotatinDirection=AutoScrollDirection.right;
         }
         loopHandler.setLoop(autoRotation);
-    }
 
+    }
 
     /**
      * handler处理
@@ -213,15 +212,15 @@ public class LoopRotarySwitchView extends RelativeLayout {
         return new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                angle+=Math.cos(Math.toRadians(loopRotationZ))*(distanceX/views.size())
-                        +Math.sin(Math.toRadians(loopRotationZ))*(distanceY/views.size());
+                angle+=Math.cos(Math.toRadians(loopRotationZ))*(distanceX/4)
+                        +Math.sin(Math.toRadians(loopRotationZ))*(distanceY/4);
                 initView();
                 return true;
             }
         };
     }
 
-    private void initView() {
+    public void initView() {
         for (int i = 0; i < views.size(); i++) {
             double radians=angle+180- i * 360 / size;
             float x0 = (float)Math.sin(Math.toRadians(radians)) * r;
@@ -310,9 +309,6 @@ public class LoopRotarySwitchView extends RelativeLayout {
             view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Log.v("888888","position:"+position);
-                    Log.v("888888","selectItem:"+selectItem);
                     //对子view添加点击事件
                     if (position != selectItem) {
                         setSelectItem(position);

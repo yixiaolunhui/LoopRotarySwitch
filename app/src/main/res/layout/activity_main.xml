@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:weightSum="4"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
+
 
     <com.dalong.library.view.LoopRotarySwitchView
         android:id="@+id/mLoopRotarySwitchView"
         android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:gravity="center"
-        android:layout_weight="1"
-        android:layout_height="0dp"/>
-    <com.dalong.library.view.LoopRotarySwitchView
-        android:id="@+id/mLoopRotarySwitchView2"
-        android:layout_width="fill_parent"
-        android:gravity="center"
-        android:layout_weight="1"
-        app:direction="right"
-        android:layout_height="0dp">
+        app:direction="right">
         <ImageView
             android:src="@mipmap/image1"
             android:layout_width="wrap_content"
@@ -38,71 +31,67 @@
             android:src="@mipmap/image4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/image5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/image6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/image7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/image8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </com.dalong.library.view.LoopRotarySwitchView>
+
+
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_weight="2"
-        android:layout_height="0dp">
-        <com.dalong.library.view.LoopRotarySwitchView
-            android:id="@+id/mLoopRotarySwitchView3"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            app:orientation="vertical"
-            android:layout_height="match_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/loopView0_tv1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="45sp"
-                android:text="我"/>
-            <TextView
-                android:id="@+id/loopView1_tv1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:textSize="45sp"
-                android:gravity="center"
-                android:text="爱" />
-            <TextView
-                android:id="@+id/loopView2_tv1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/point4"
-                android:textSize="45sp"
-                android:gravity="center"
-                android:text="你" />
-        </com.dalong.library.view.LoopRotarySwitchView>
-
-        <com.dalong.library.view.LoopRotarySwitchView
-            android:id="@+id/mLoopRotarySwitchView4"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            app:direction="right"
-            app:orientation="vertical"
-            app:autoRotation="true"
-            android:layout_height="match_parent">
-            <ImageView
-                android:src="@mipmap/image1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:src="@mipmap/image2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:src="@mipmap/image3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:src="@mipmap/image4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </com.dalong.library.view.LoopRotarySwitchView>
+        <TextView
+            android:text="Set X"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:textColor="#444444"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <SeekBar
+            android:id="@+id/seekBarX"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:max="180" />
+        <TextView
+            android:text="Set Z"
+            android:textSize="16sp"
+            android:textColor="#444444"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <SeekBar
+            android:id="@+id/seekBarZ"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:max="360" />
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auto Switch"
+            android:layout_gravity="right"
+            android:checked="false" />
     </LinearLayout>
 
-</LinearLayout>
+
+
+</RelativeLayout>
