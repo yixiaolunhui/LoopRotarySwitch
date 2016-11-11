@@ -83,13 +83,27 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:max="360" />
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Auto Switch"
-            android:layout_gravity="right"
-            android:checked="false" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Switch
+                android:id="@+id/switchLeftright"
+                android:layout_height="wrap_content"
+                android:text="left-right"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="left"
+                android:checked="true" />
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Auto Switch"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:checked="false" />
+        </RelativeLayout>
+
     </LinearLayout>
 
 
