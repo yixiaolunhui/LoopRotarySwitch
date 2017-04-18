@@ -1,4 +1,4 @@
-#介绍
+# 介绍
 1: LoopRotarySwitchView
     可以无限循环，自动旋转，停靠的3D旋转布局控件,无需编写代码，直接在布局中加入自己的布局即可。
     控件继承相对布局RelativeLayout直接可以当做布局使用。
@@ -7,7 +7,7 @@
 
 ![image](https://github.com/dalong982242260/LoopRotarySwitch/blob/master/img/dalong.gif)
 
-##优势
+## 优势
     *1.3d旋转RelativeLayout 
     *2.支持自动旋转
     *3.可直接在xml添加元素即可添加列数据。也可以动态代码添加view
