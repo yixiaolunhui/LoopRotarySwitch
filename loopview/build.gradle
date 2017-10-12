@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 103
-        versionName "1.0.3"
+        versionCode 104
+        versionName "1.0.4"
     }
     buildTypes {
         release {
@@ -30,7 +30,7 @@ publish {
     userOrg = 'dalong982242260'//bintray.com用户名
     groupId = 'com.dalong'//jcenter上的路径
     artifactId = 'loopview'//项目名称
-    publishVersion = '1.0.3'//版本号
+    publishVersion = '1.0.4'//版本号
     desc = '3d旋转view'//描述，不重要
     website = 'https://github.com/dalong982242260/LoopRotarySwitch'//网站，不重要
 }

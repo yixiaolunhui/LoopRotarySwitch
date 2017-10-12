@@ -10,7 +10,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.Toast;
 
+import com.dalong.library.listener.OnItemClickListener;
 import com.dalong.library.listener.OnItemSelectedListener;
 import com.dalong.library.view.LoopRotarySwitchView;
 
@@ -31,15 +33,23 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initLoopRotarySwitchView();
         initLinstener();
+        mLoopRotarySwitchView.setSelectItem(4);
     }
 
     private void initLinstener() {
+        mLoopRotarySwitchView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int item, View view) {
+                Toast.makeText(MainActivity.this, "item:"+item, Toast.LENGTH_SHORT).show();
+            }
+        });
         /**
          * 选中回调
          */
         mLoopRotarySwitchView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void selected(int position, View view) {
+
             }
         });
         /**
@@ -109,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAutoRotation(false)//是否自动切换
                 .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)
                 .setAutoRotationTime(1500);//自动切换的时间  单位毫秒
+
     }
 
     /**
