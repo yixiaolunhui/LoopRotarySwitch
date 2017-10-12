@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical"
+                tools:context=".MainActivity">
 
 
     <com.dalong.library.view.LoopRotarySwitchView
@@ -15,41 +15,51 @@
         android:layout_height="fill_parent"
         android:gravity="center"
         app:direction="right">
+
         <ImageView
-            android:src="@mipmap/image1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/image1"/>
+
         <ImageView
-            android:src="@mipmap/image2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/image2"/>
+
         <ImageView
-            android:src="@mipmap/image3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/image3"/>
+
         <ImageView
-            android:src="@mipmap/image4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/image4"/>
+
         <ImageView
-            android:src="@mipmap/image5"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/image5"/>
+
         <ImageView
-            android:src="@mipmap/image6"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/image6"/>
         <ImageView
-            android:src="@mipmap/image7"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/image7"/>
         <ImageView
-            android:src="@mipmap/image8"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/image8"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/image9"/>
 
     </com.dalong.library.view.LoopRotarySwitchView>
-
 
 
     <LinearLayout
@@ -60,52 +70,57 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="Set X"
-            android:textSize="16sp"
-            android:padding="5dp"
-            android:textColor="#444444"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Set X"
+            android:textColor="#444444"
+            android:textSize="16sp"/>
+
         <SeekBar
             android:id="@+id/seekBarX"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:max="180" />
+            android:max="180"/>
+
         <TextView
-            android:text="Set Z"
-            android:textSize="16sp"
-            android:textColor="#444444"
-            android:padding="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Set Z"
+            android:textColor="#444444"
+            android:textSize="16sp"/>
+
         <SeekBar
             android:id="@+id/seekBarZ"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:max="360" />
+            android:max="360"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Switch
                 android:id="@+id/switchLeftright"
-                android:layout_height="wrap_content"
-                android:text="left-right"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_gravity="left"
-                android:checked="true" />
+                android:checked="true"
+                android:text="left-right"/>
+
             <CheckBox
                 android:id="@+id/checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Auto Switch"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
-                android:checked="false" />
+                android:checked="false"
+                android:text="Auto Switch"/>
         </RelativeLayout>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

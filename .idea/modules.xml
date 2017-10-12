@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/LoopRotarySwitch.iml" filepath="$PROJECT_DIR$/LoopRotarySwitch.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loopview/loopview.iml" filepath="$PROJECT_DIR$/loopview/loopview.iml" />
     </modules>
   </component>
 </project>
