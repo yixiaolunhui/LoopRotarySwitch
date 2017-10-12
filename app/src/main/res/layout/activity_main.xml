@@ -16,36 +16,120 @@
         android:gravity="center"
         app:direction="right">
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/button_exhibits1"/>
+            android:layout_height="wrap_content">
 
-        <ImageView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/girl"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"
+                android:text="1"
+                android:textColor="@color/colorAccent"
+                android:textSize="35sp"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/button_exhibits2"/>
+            android:layout_height="wrap_content">
 
-        <ImageView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/girl"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"
+                android:text="2"
+                android:textColor="@color/colorAccent"
+                android:textSize="35sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/button_exhibits3"/>
+            android:layout_height="wrap_content">
 
-        <ImageView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/girl"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"
+                android:text="3"
+                android:textColor="@color/colorAccent"
+                android:textSize="35sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/button_exhibits4"/>
+            android:layout_height="wrap_content">
 
-        <ImageView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/girl"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"
+                android:text="4"
+                android:textColor="@color/colorAccent"
+                android:textSize="35sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/button_exhibits5"/>
+            android:layout_height="wrap_content">
 
-        <ImageView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/girl"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"
+                android:text="5"
+                android:textColor="@color/colorAccent"
+                android:textSize="35sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/button_exhibits6"/>
+            android:layout_height="wrap_content">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/girl"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"
+                android:text="6"
+                android:textColor="@color/colorAccent"
+                android:textSize="35sp"/>
+        </RelativeLayout>
     </com.dalong.library.view.LoopRotarySwitchView>
 
 
@@ -61,13 +145,13 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Set X"
-            android:textColor="#444444"
-            android:textSize="16sp"/>
+            android:textColor="@color/white"
+            />
 
         <SeekBar
             android:id="@+id/seekBarX"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:max="180"/>
 
         <TextView
@@ -75,13 +159,13 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Set Z"
-            android:textColor="#444444"
-            android:textSize="16sp"/>
+            android:textColor="@color/white"
+            />
 
         <SeekBar
             android:id="@+id/seekBarZ"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:max="360"/>
 
         <RelativeLayout

@@ -3,7 +3,7 @@
 
 ## 效果图
 
-![image](https://github.com/dalong982242260/LoopRotarySwitch/blob/master/img/dalong.gif)
+![image](https://github.com/dalong982242260/LoopRotarySwitch/blob/master/img/dalong2.gif)
 
 
 ## 如何使用
