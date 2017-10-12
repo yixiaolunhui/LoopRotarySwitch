@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private void initLoopRotarySwitchView() {
         mLoopRotarySwitchView
                 .setR(width/3)//设置R的大小
+                .setMultiple(0.1f)
                 .setAutoRotation(false)//是否自动切换
                 .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)
                 .setAutoRotationTime(1500);//自动切换的时间  单位毫秒

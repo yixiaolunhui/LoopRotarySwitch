@@ -231,8 +231,12 @@ public class LoopRotarySwitchView extends RelativeLayout {
             float x0 = (float) Math.sin(Math.toRadians(radians)) * r;
             float y0 = (float) Math.cos(Math.toRadians(radians)) * r;
             float scale0 = (distance - y0) / (distance + r);//计算子view之间的比例，可以看到distance越大的话 比例越小，也就是大小就相差越小
-            views.get(i).setScaleX(scale0);//对view进行缩放
-            views.get(i).setScaleY(scale0);//对view进行缩放
+
+            views.get(i).setScaleX(Math.max(scale0,0.5f));//对view进行缩放
+            views.get(i).setScaleY(Math.max(scale0,0.5f));//对view进行缩放
+
+            views.get(i).setAlpha(Math.max(scale0,0.5f));
+
             float rotationX_y = (float) Math.sin(Math.toRadians(loopRotationX * Math.cos(Math.toRadians(radians)))) * r;
             float rotationZ_y = -(float) Math.sin(Math.toRadians(-loopRotationZ)) * x0;
             float rotationZ_x = (((float) Math.cos(Math.toRadians(-loopRotationZ)) * x0) - x0);
@@ -315,8 +319,8 @@ public class LoopRotarySwitchView extends RelativeLayout {
                 @Override
                 public void onClick(View v) {
                     //对子view添加点击事件
-                    if (position != selectItem ) {
-                        if(isCanSwitchItem)setSelectItem(position);
+                    if (position != selectItem) {
+                        if (isCanSwitchItem) setSelectItem(position);
                     } else {
                         if (isCanClickListener && onItemClickListener != null) {
                             onItemClickListener.onItemClick(position, views.get(position));
@@ -705,11 +709,12 @@ public class LoopRotarySwitchView extends RelativeLayout {
     /**
      * 设置倍数
      *
-     * @param mMultiple 设置这个必须在setR之前调用，否则无效
+     * @param mMultiple
      * @return
      */
     public LoopRotarySwitchView setMultiple(float mMultiple) {
         this.multiple = mMultiple;
+        distance = multiple * r;
         return this;
     }
 
