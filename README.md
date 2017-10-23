@@ -11,7 +11,7 @@
 
 在你的项目Gradle 添加
 
-     compile 'com.dalong:loopview:1.0.2'
+     compile 'com.dalong:loopview:1.0.4'
 
 或者直接引入库文件
 
