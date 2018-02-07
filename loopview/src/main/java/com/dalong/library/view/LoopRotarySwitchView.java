@@ -10,7 +10,9 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.dalong.library.R;
 import com.dalong.library.listener.OnItemClickListener;
@@ -22,6 +24,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
+
+import static android.content.ContentValues.TAG;
 
 /***
  * 水平旋转轮播控件
@@ -46,7 +50,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     private ValueAnimator xAnimation = null;
 
-    private int loopRotationX = 0, loopRotationZ = 0;//x轴旋转和轴旋转，y轴无效果
+    private int loopRotationX = 0, loopRotationZ = 0;//x轴旋转和z轴旋转，y轴无效果
 
     private GestureDetector mGestureDetector = null;//手势类
 
@@ -68,7 +72,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     private boolean touching = false;//正在触摸
 
-    private AutoScrollDirection autoRotatinDirection = AutoScrollDirection.left; //默认自动滚动是从右往左
+    private AutoScrollDirection autoRotatinDirection = AutoScrollDirection.right; //默认自动滚动是从右往左
 
     private List<View> views = new ArrayList<View>();//子view引用列表
 
@@ -82,7 +86,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     private float x;//移动的x是否符合回调点击事件
 
-    private float limitX = 30;//滑动倒最低30
+    private float limitX = 50;//滑动倒最低30
 
     private boolean isCanSwitchItem = true;
 
@@ -217,29 +221,28 @@ public class LoopRotarySwitchView extends RelativeLayout {
         return new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                angle += Math.cos(Math.toRadians(loopRotationZ)) * (distanceX / 4)
-                        + Math.sin(Math.toRadians(loopRotationZ)) * (distanceY / 4);
+                angle += Math.cos(Math.toRadians(loopRotationZ)) * (distanceX / 4f)
+                        + Math.sin(Math.toRadians(loopRotationZ)) * (distanceY / 4f);
                 initView();
                 return true;
             }
         };
     }
 
+
+
     public void initView() {
-        for (int i = 0; i < views.size(); i++) {
-            double radians = angle + 180 - i * 360 / size;
+        for (int i = 0; i < views.size()&&size!=0; i++) {
+            double radians = angle + 180 - (float) (i * 360f / size);//注意360f是为了解决有余数的时候的偏移问题
             float x0 = (float) Math.sin(Math.toRadians(radians)) * r;
             float y0 = (float) Math.cos(Math.toRadians(radians)) * r;
             float scale0 = (distance - y0) / (distance + r);//计算子view之间的比例，可以看到distance越大的话 比例越小，也就是大小就相差越小
-
-            views.get(i).setScaleX(Math.max(scale0,0.5f));//对view进行缩放
-            views.get(i).setScaleY(Math.max(scale0,0.5f));//对view进行缩放
-
-            views.get(i).setAlpha(Math.max(scale0,0.5f));
-
-            float rotationX_y = (float) Math.sin(Math.toRadians(loopRotationX * Math.cos(Math.toRadians(radians)))) * r;
-            float rotationZ_y = -(float) Math.sin(Math.toRadians(-loopRotationZ)) * x0;
-            float rotationZ_x = (((float) Math.cos(Math.toRadians(-loopRotationZ)) * x0) - x0);
+            views.get(i).setScaleX(Math.max(scale0,0.5f));//对view进行缩放0.5
+            views.get(i).setScaleY(Math.max(scale0,0.5f));//对view进行缩放0.5
+            views.get(i).setAlpha(Math.max(scale0,1f));//0.5
+            float rotationX_y = (float) Math.sin(Math.toRadians(loopRotationX * Math.cos(Math.toRadians(radians)))) * r;//0
+            float rotationZ_y = -(float) Math.sin(Math.toRadians(-loopRotationZ)) * x0;//0
+            float rotationZ_x = (((float) Math.cos(Math.toRadians(-loopRotationZ)) * x0) - x0);//0
             views.get(i).setTranslationX(x0 + rotationZ_x);
             views.get(i).setTranslationY(rotationX_y + rotationZ_y);
         }
@@ -252,6 +255,9 @@ public class LoopRotarySwitchView extends RelativeLayout {
         postInvalidate();
     }
 
+    public void setclickitem(ImageView img,int bitmapid){
+        img.setImageDrawable(this.getResources().getDrawable(bitmapid));
+    }
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -304,6 +310,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
     /**
      * 初始化view
      */
+    boolean debugselect=false;
     public void checkChildView() {
         for (int i = 0; i < views.size(); i++) {//先清空views里边可能存在的view防止重复
             views.remove(i);
@@ -320,7 +327,67 @@ public class LoopRotarySwitchView extends RelativeLayout {
                 public void onClick(View v) {
                     //对子view添加点击事件
                     if (position != selectItem) {
-                        if (isCanSwitchItem) setSelectItem(position);
+                        if (isCanSwitchItem) {
+                            /*---------------设置好当前图标的左右两侧的id------------------*/
+                            int left,right;
+                            if(selectItem==0){
+                                left=views.size()-1;
+                                right=selectItem+1;
+                            }else if(selectItem==views.size()-1){
+                                left=selectItem-1;
+                                right=0;
+                            }else{
+                                left=selectItem-1;
+                                right=selectItem+1;
+                            }
+                           /*-------------------如果选择到后面的item就跳转到左边或者右边的item-----------------*/
+                            if(debugselect){
+                                Log.d(TAG, "/******************************************************/");
+                            }
+                            if(position==left||position==right){//符合左右位置的直接跳转
+                                setSelectItem(position);
+                                if(debugselect){
+                                    Log.d(TAG, "select left or right");
+                                }
+                            }else{//不符合的做判断
+                                if(selectItem>=((float)(views.size()/2f))){
+                                    if(debugselect){
+                                        Log.d(TAG, "当前选择的是: "+selectItem+"  ；点击的是"+position);
+                                    }
+                                    float sel=selectItem-(views.size()/2f);
+                                    if(position>sel&&position<selectItem){
+                                        setSelectItem(left);
+                                        if(debugselect){
+                                            Log.d(TAG, sel+"<"+position+"<"+selectItem+"------->左转到-->"+left);
+                                        }
+                                    }else{
+                                        setSelectItem(right);
+                                        if(debugselect){
+                                            Log.d(TAG, sel+">"+position+"或者"+position+"<"+selectItem+"------->右转到-->"+right);
+                                        }
+                                    }
+                                }else{
+                                    if(debugselect){
+                                        Log.d(TAG, "当前选择的是: "+selectItem+"  ；点击的是"+position);
+                                    }
+                                    float sel=selectItem+(views.size()/2f);
+                                    if(position>selectItem&&position<sel){
+                                        setSelectItem(right);
+                                        if(debugselect){
+                                            Log.d(TAG, selectItem+"<"+position+"<"+sel+"------->右转到-->"+right);
+                                        }
+                                    }else{
+                                        setSelectItem(left);
+                                        if(debugselect){
+                                            Log.d(TAG, selectItem+">"+position+"或者"+position+"<"+sel+"------->左转到-->"+left);
+                                        }
+                                    }
+                                }
+                            }
+                            if(debugselect){
+                                Log.d(TAG, "/******************************************************/");
+                            }
+                        }
                     } else {
                         if (isCanClickListener && onItemClickListener != null) {
                             onItemClickListener.onItemClick(position, views.get(position));
@@ -336,31 +403,102 @@ public class LoopRotarySwitchView extends RelativeLayout {
     /**
      * 复位
      */
+    boolean debugresetposition=false;
+
     private void restPosition() {
         if (size == 0) {
             return;
         }
         float finall = 0;
-        float part = 360 / size;//一份的角度
+        float part=0;
+        part = 360f / size;//一份的角度,注意这里360f是浮点，不然有余数的时候会出偏移问题
         if (angle < 0) {
             part = -part;
         }
         float minvalue = (int) (angle / part) * part;//最小角度
         float maxvalue = (int) (angle / part) * part + part;//最大角度
+        if(debugresetposition){
+            Log.d(TAG, "/******************************************************/");
+            Log.d(TAG, "angle: "+angle);
+            Log.d(TAG, "last_angle: "+last_angle);
+            Log.d(TAG, "maxvalue: "+maxvalue);
+            Log.d(TAG, "minvalue: "+minvalue);
+        }
         if (angle >= 0) {//分为是否小于0的情况
+            if(debugresetposition){
+                Log.d(TAG, "angle >= 0");
+            }
+
             if (angle - last_angle > 0) {
-                finall = maxvalue;
+                if(Math.abs(angle-last_angle)>=(Math.abs((maxvalue-minvalue)/2f))){//这里做个判断，假如角度超多少才会跳到下一个Math.abs((maxvalue-minvalue)/3)
+                    finall = maxvalue;
+                    if(debugresetposition){
+                        Log.d(TAG, "angle-last_angle >= 40, finall = maxvalue");
+                    }
+
+                }else{
+                    if(debugresetposition){
+                        Log.d(TAG, "angle-last_angle < 40, finall = last_angle");
+                    }
+
+                    finall = last_angle;
+                }
             } else {
-                finall = minvalue;
+                if(Math.abs(angle-last_angle)>=(Math.abs((maxvalue-minvalue)/2f))){//这里做个判断，假如角度超多少才会跳到下一个Math.abs((maxvalue-minvalue)/3)
+                    finall = minvalue;
+                    if(debugresetposition){
+                        Log.d(TAG, "last_angle-angle > 40, finall = minvalue");
+                    }
+
+                }else{
+                    finall = last_angle;
+                    if(debugresetposition){
+                        Log.d(TAG, "last_angle-angle < 40, finall = last_angle");
+                    }
+
+                }
             }
         } else {
+            if(debugresetposition){
+                Log.d(TAG, "angle < 0");
+            }
+
             if (angle - last_angle < 0) {
-                finall = maxvalue;
+                if(Math.abs(angle - last_angle)>=(Math.abs((maxvalue-minvalue)/2f))){//这里做个判断，假如角度超多少才会跳到下一个Math.abs((minvalue-maxvalue)/3)
+                    finall = maxvalue;
+                    if(debugresetposition){
+                        Log.d(TAG, "angle - last_angle > 40, finall = maxvalue");
+                    }
+
+                }else{
+                    finall = last_angle;
+                    if(debugresetposition){
+                        Log.d(TAG, "angle - last_angle < 40, finall = last_angle");
+                    }
+
+                }
             } else {
-                finall = minvalue;
+                if(Math.abs(angle - last_angle)>=(Math.abs((maxvalue-minvalue)/2f))){//这里做个判断，假如角度超多少才会跳到下一个Math.abs((minvalue-maxvalue)/3)
+                    finall = minvalue;
+                    if(debugresetposition){
+                        Log.d(TAG, "last_angle - angle > 40, finall = minvalue");
+                    }
+
+                }else{
+                    finall = last_angle;
+                    if(debugresetposition){
+                        Log.d(TAG, "last_angle - angle < 40, finall = last_angle");
+                    }
+
+                }
             }
         }
         AnimRotationTo(finall, null);
+        if(debugresetposition){
+            Log.d(TAG, "finall: "+finall);
+            Log.d(TAG, "/******************************************************/");
+        }
+
     }
 
 
@@ -370,18 +508,25 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param finall
      * @param complete
      */
+    boolean animrotating=false;
+    boolean angledebug=false;
     private void AnimRotationTo(float finall, final Runnable complete) {
+        animrotating=true;
         if (angle == finall) {//如果相同说明不需要旋转
+            animrotating=false;
             return;
         }
         restAnimator = ValueAnimator.ofFloat(angle, finall);
         restAnimator.setInterpolator(new DecelerateInterpolator());//设置旋转减速插值器
-        restAnimator.setDuration(300);
+        restAnimator.setDuration(200);
 
         restAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 if (touching == false) {
+                    if(angledebug){
+                        Log.d(TAG, "onAnimationUpdate angle: "+angle+"\r\n");
+                    }
                     angle = (Float) animation.getAnimatedValue();
                     initView();
                 }
@@ -395,6 +540,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                animrotating=false;
                 isCanSwitchItem = true;
                 if (touching == false) {
                     selectItem = calculateItem();
@@ -428,6 +574,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     complete.run();
+                    animrotating=false;
                 }
 
                 @Override
@@ -459,18 +606,22 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param event
      * @return
      */
+    private Float touchx,touchy;
     private boolean onTouch(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            touchx=event.getX();
             last_angle = angle;
             touching = true;
         }
         boolean sc = mGestureDetector.onTouchEvent(event);
         if (sc) {
-            this.getParent().requestDisallowInterceptTouchEvent(true);//通知父控件勿拦截本控件
+            this.getParent().requestDisallowInterceptTouchEvent(false);//通知父控件勿拦截本控件
         }
         if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
             touching = false;
+            // if(Math.abs(touchx-event.getX())>50){
             restPosition();
+            //}
             return true;
         }
         return true;
@@ -479,30 +630,34 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     /**
      * 触摸方法
-     *
+     *后
      * @param event
      * @return
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (onLoopViewTouchListener != null) {
-            onLoopViewTouchListener.onTouch(event);
+        if(!animrotating){
+            if (onLoopViewTouchListener != null) {
+                onLoopViewTouchListener.onTouch(event);
+            }
+            isCanClickListener(event);
         }
-        isCanClickListener(event);
         return true;
     }
 
 
     /**
-     * 触摸停止计时器，抬起设置可下啦刷新
+     * 触摸停止计时器，抬起设置可下啦刷新,先
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        onTouch(ev);
-        if (onLoopViewTouchListener != null) {
-            onLoopViewTouchListener.onTouch(ev);
+        if(!animrotating){
+            onTouch(ev);
+            if (onLoopViewTouchListener != null) {
+                onLoopViewTouchListener.onTouch(ev);
+            }
+            isCanClickListener(ev);
         }
-        isCanClickListener(ev);
         return super.dispatchTouchEvent(ev);
     }
 
