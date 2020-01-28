@@ -1,4 +1,4 @@
-package com.dalong.library.view;
+package com.dalong.library;
 
 import android.os.Handler;
 import android.os.Message;
@@ -6,13 +6,13 @@ import android.os.Message;
 /**
  * loopHandler 发送
  */
-public abstract class LoopRotarySwitchViewHandler extends Handler {
+public abstract class LoopViewHandler extends Handler {
 
-    private boolean loop = false;//是否要发送
+    private boolean isCanLoop = false;//是否要发送
 
-    public long loopTime = 3000;//时间间隔
+    public long mLoopTime = 3000;//时间间隔
 
-    public static final int msgid = 1000;//id
+    public static final int MSG_WHAT = 1000;
 
     private Message msg = createMsg();//创建message
 
@@ -21,8 +21,8 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
      *
      * @param time
      */
-    public LoopRotarySwitchViewHandler(int time) {
-        this.loopTime = time;
+    public LoopViewHandler(int time) {
+        this.mLoopTime = time;
     }
 
     /**
@@ -32,9 +32,9 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
      */
     @Override
     public void handleMessage(Message msg) {
-        switch (msg.what = msgid) {
-            case msgid:
-                if (loop) {
+        switch (msg.what = MSG_WHAT) {
+            case MSG_WHAT:
+                if (isCanLoop) {
                     doScroll();
                     sendMsg();
                 }
@@ -49,13 +49,14 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
      * @param loop
      */
     public void setLoop(boolean loop) {
-        this.loop = loop;
+        this.isCanLoop = loop;
         if (loop) {
             sendMsg();
         } else {
             try {
-                removeMessages(msgid);
+                removeMessages(MSG_WHAT);
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -65,11 +66,11 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
      */
     private void sendMsg() {
         try {
-            removeMessages(msgid);
+            removeMessages(MSG_WHAT);
         } catch (Exception e) {
         }
         msg = createMsg();
-        this.sendMessageDelayed(msg, loopTime);
+        this.sendMessageDelayed(msg, mLoopTime);
     }
 
     /**
@@ -79,7 +80,7 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
      */
     public Message createMsg() {
         Message msg = new Message();
-        msg.what = msgid;
+        msg.what = MSG_WHAT;
         return msg;
     }
 
@@ -89,11 +90,11 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
      * @param loopTime
      */
     public void setLoopTime(long loopTime) {
-        this.loopTime = loopTime;
+        this.mLoopTime = loopTime;
     }
 
     public long getLoopTime() {
-        return loopTime;
+        return mLoopTime;
     }
 
     /**
@@ -102,7 +103,7 @@ public abstract class LoopRotarySwitchViewHandler extends Handler {
      * @return
      */
     public boolean isLoop() {
-        return loop;
+        return isCanLoop;
     }
 
     public abstract void doScroll();

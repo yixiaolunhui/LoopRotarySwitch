@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/2019-LoopRotarySwitch.iml" filepath="$PROJECT_DIR$/2019-LoopRotarySwitch.iml" />
       <module fileurl="file://$PROJECT_DIR$/LoopRotarySwitch.iml" filepath="$PROJECT_DIR$/LoopRotarySwitch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/LoopRotarySwitch-app.iml" filepath="$PROJECT_DIR$/app/LoopRotarySwitch-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loopview/LoopRotarySwitch-loopview.iml" filepath="$PROJECT_DIR$/loopview/LoopRotarySwitch-loopview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/loopview/loopview.iml" filepath="$PROJECT_DIR$/loopview/loopview.iml" />
     </modules>
   </component>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="LoopRotarySwitchView">
+    <declare-styleable name="LoopViewLayout">
         <attr name="orientation">
             <enum name="vertical" value="0"/>
             <enum name="horizontal" value="1"/>

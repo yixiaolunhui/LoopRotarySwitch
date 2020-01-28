@@ -1,34 +1,35 @@
-package com.dalong.library.view;
+package com.dalong.library;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 
-import com.dalong.library.R;
+import com.dalong.library.adapter.LoopViewAdapter;
 import com.dalong.library.listener.OnItemClickListener;
 import com.dalong.library.listener.OnItemSelectedListener;
-import com.dalong.library.listener.OnLoopViewTouchListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.Map;
 
 /***
  * 水平旋转轮播控件
  */
-public class LoopRotarySwitchView extends RelativeLayout {
+public class LoopViewLayout extends RelativeLayout implements ILoopView<LoopViewAdapter>, LoopViewAdapter.OnLoopViewChangeListener {
 
-    private final static int LoopR = 200;
+    private final static int LoopR = 330;
 
     private final static int vertical = 0;//竖直
 
@@ -68,13 +69,9 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     private boolean touching = false;//正在触摸
 
-    private AutoScrollDirection autoRotatinDirection = AutoScrollDirection.left; //默认自动滚动是从右往左
-
-    private List<View> views = new ArrayList<View>();//子view引用列表
+    private AutoScrollDirection autoRotatinDirection = AutoScrollDirection.LEFT; //默认自动滚动是从右往左
 
     private OnItemSelectedListener onItemSelectedListener = null;//选择事件接口
-
-    private OnLoopViewTouchListener onLoopViewTouchListener = null;//选择事件接口
 
     private OnItemClickListener onItemClickListener = null;//被点击的回调
 
@@ -82,12 +79,10 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     private float x;//移动的x是否符合回调点击事件
 
-    private float limitX = 30;//滑动倒最低30
-
-    private boolean isCanSwitchItem = true;
+    private float limitX;//滑动倒最低30
 
     public enum AutoScrollDirection {
-        left, right
+        LEFT, RIGHT
     }
 
     /**
@@ -95,7 +90,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
      *
      * @param context
      */
-    public LoopRotarySwitchView(Context context) {
+    public LoopViewLayout(Context context) {
         this(context, null);
     }
 
@@ -105,7 +100,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param context
      * @param attrs
      */
-    public LoopRotarySwitchView(Context context, AttributeSet attrs) {
+    public LoopViewLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
@@ -116,14 +111,17 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param attrs
      * @param defStyleAttr
      */
-    public LoopRotarySwitchView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LoopViewLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LoopRotarySwitchView);
-        mOrientation = typedArray.getInt(R.styleable.LoopRotarySwitchView_orientation, horizontal);
-        autoRotation = typedArray.getBoolean(R.styleable.LoopRotarySwitchView_autoRotation, false);
-        r = typedArray.getDimension(R.styleable.LoopRotarySwitchView_r, LoopR);
-        int direction = typedArray.getInt(R.styleable.LoopRotarySwitchView_direction, 0);
+        setGravity(Gravity.CENTER);
+        ViewConfiguration mVelocityTracker = new ViewConfiguration();
+        limitX = mVelocityTracker.getScaledTouchSlop();
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LoopViewLayout);
+        mOrientation = typedArray.getInt(R.styleable.LoopViewLayout_orientation, horizontal);
+        autoRotation = typedArray.getBoolean(R.styleable.LoopViewLayout_autoRotation, false);
+        r = typedArray.getDimension(R.styleable.LoopViewLayout_r, LoopR);
+        int direction = typedArray.getInt(R.styleable.LoopViewLayout_direction, 0);
         typedArray.recycle();
         mGestureDetector = new GestureDetector(context, getGeomeryController());
         if (mOrientation == horizontal) {//如果是水平 z值为0  如果是竖直z值为90
@@ -132,9 +130,9 @@ public class LoopRotarySwitchView extends RelativeLayout {
             loopRotationZ = 90;
         }
         if (direction == 0) {//设置自定滚动的方向
-            autoRotatinDirection = AutoScrollDirection.left;
+            autoRotatinDirection = AutoScrollDirection.LEFT;
         } else {
-            autoRotatinDirection = AutoScrollDirection.right;
+            autoRotatinDirection = AutoScrollDirection.RIGHT;
         }
         loopHandler.setLoop(autoRotation);
 
@@ -143,21 +141,21 @@ public class LoopRotarySwitchView extends RelativeLayout {
     /**
      * handler处理
      */
-    LoopRotarySwitchViewHandler loopHandler = new LoopRotarySwitchViewHandler(3000) {
+    LoopViewHandler loopHandler = new LoopViewHandler(2000) {
         @Override
         public void doScroll() {
             try {
                 if (size != 0) {//判断自动滑动从那边开始
-                    int perAngle = 0;
+                    float perAngle = 0;
                     switch (autoRotatinDirection) {
-                        case left:
-                            perAngle = 360 / size;
+                        case LEFT:
+                            perAngle = 360f / size;
                             break;
-                        case right:
-                            perAngle = -360 / size;
+                        case RIGHT:
+                            perAngle = -360f / size;
                             break;
                     }
-                    if (angle == 360) {
+                    if (angle == 360f) {
                         angle = 0f;
                     }
                     AnimRotationTo(angle + perAngle, null);
@@ -168,45 +166,6 @@ public class LoopRotarySwitchView extends RelativeLayout {
         }
     };
 
-    /**
-     * 排序
-     * 對子View 排序，然后根据变化选中是否重绘,这样是为了实现view 在显示的时候来控制当前要显示的是哪三个view，可以改变排序看下效果
-     *
-     * @param list
-     */
-    @SuppressWarnings("unchecked")
-    private <T> void sortList(List<View> list) {
-
-        @SuppressWarnings("rawtypes")
-        Comparator comparator = new SortComparator();
-        T[] array = list.toArray((T[]) new Object[list.size()]);
-
-        Arrays.sort(array, comparator);
-        int i = 0;
-        ListIterator<T> it = (ListIterator<T>) list.listIterator();
-        while (it.hasNext()) {
-            it.next();
-            it.set(array[i++]);
-        }
-        for (int j = 0; j < list.size(); j++) {
-            list.get(j).bringToFront();
-        }
-    }
-
-    /**
-     * 筛选器
-     */
-    private class SortComparator implements Comparator<View> {
-        @Override
-        public int compare(View lhs, View rhs) {
-            int result = 0;
-            try {
-                result = (int) (1000 * lhs.getScaleX() - 1000 * rhs.getScaleX());
-            } catch (Exception e) {
-            }
-            return result;
-        }
-    }
 
     /**
      * 手势
@@ -219,60 +178,57 @@ public class LoopRotarySwitchView extends RelativeLayout {
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 angle += Math.cos(Math.toRadians(loopRotationZ)) * (distanceX / 4)
                         + Math.sin(Math.toRadians(loopRotationZ)) * (distanceY / 4);
-                initView();
+                updateLoopViews();
                 return true;
             }
         };
     }
 
-    public void initView() {
-        for (int i = 0; i < views.size(); i++) {
-            double radians = angle + 180 - i * 360 / size;
+    /**
+     * 更新view位置
+     */
+    public void updateLoopViews() {
+        int count = getChildCount();
+        Map<Integer, Float> map = new HashMap<>();
+        for (int i = 0; i < count; i++) {
+            View view = getChildAt(i);
+            float radians = angle + 180 - (float) (i * 360f / size);
             float x0 = (float) Math.sin(Math.toRadians(radians)) * r;
             float y0 = (float) Math.cos(Math.toRadians(radians)) * r;
             float scale0 = (distance - y0) / (distance + r);//计算子view之间的比例，可以看到distance越大的话 比例越小，也就是大小就相差越小
-
-            views.get(i).setScaleX(Math.max(scale0,0.5f));//对view进行缩放
-            views.get(i).setScaleY(Math.max(scale0,0.5f));//对view进行缩放
-
-            views.get(i).setAlpha(Math.max(scale0,0.5f));
+            view.setScaleX(Math.max(scale0, 0.4f));//对view进行缩放
+            view.setScaleY(Math.max(scale0, 0.4f));//对view进行缩放
+            view.setAlpha(Math.max(scale0, 0.4f));
+            map.put((Integer) view.getTag(), scale0);
 
             float rotationX_y = (float) Math.sin(Math.toRadians(loopRotationX * Math.cos(Math.toRadians(radians)))) * r;
             float rotationZ_y = -(float) Math.sin(Math.toRadians(-loopRotationZ)) * x0;
             float rotationZ_x = (((float) Math.cos(Math.toRadians(-loopRotationZ)) * x0) - x0);
-            views.get(i).setTranslationX(x0 + rotationZ_x);
-            views.get(i).setTranslationY(rotationX_y + rotationZ_y);
+            view.setTranslationX(x0 + rotationZ_x);
+            view.setTranslationY(rotationX_y + rotationZ_y);
         }
-        List<View> arrayViewList = new ArrayList<>();
-        arrayViewList.clear();
-        for (int i = 0; i < views.size(); i++) {
-            arrayViewList.add(views.get(i));
-        }
-        sortList(arrayViewList);
         postInvalidate();
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        initView();
-        if (autoRotation) {
-            loopHandler.sendEmptyMessageDelayed(LoopRotarySwitchViewHandler.msgid, loopHandler.loopTime);
+
+    /**
+     * 排序
+     */
+    private <T> void sortList(Map<Integer, Float> map) {
+        List<Map.Entry<Integer, Float>> list = new ArrayList<Map.Entry<Integer, Float>>(map.entrySet());
+        //然后通过比较器来实现排序
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Float>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Float> o1, Map.Entry<Integer, Float> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+        for (Map.Entry<Integer, Float> mapping : list) {
+            getChildAt(mapping.getKey()).bringToFront();
         }
+
     }
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        if (changed) {
-            checkChildView();
-            if (onItemSelectedListener != null) {
-                isCanClickListener = true;
-                onItemSelectedListener.selected(selectItem, views.get(selectItem));
-            }
-            RAnimation();
-        }
-    }
 
     public void RAnimation() {
         RAnimation(1f, r);
@@ -287,12 +243,17 @@ public class LoopRotarySwitchView extends RelativeLayout {
     }
 
     public void RAnimation(float from, float to) {
+        if (rAnimation != null) {
+            if (rAnimation.isRunning()) {
+                rAnimation.cancel();
+            }
+        }
         rAnimation = ValueAnimator.ofFloat(from, to);
         rAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 r = (Float) valueAnimator.getAnimatedValue();
-                initView();
+                updateLoopViews();
             }
         });
         rAnimation.setInterpolator(new DecelerateInterpolator());
@@ -302,38 +263,6 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
 
     /**
-     * 初始化view
-     */
-    public void checkChildView() {
-        for (int i = 0; i < views.size(); i++) {//先清空views里边可能存在的view防止重复
-            views.remove(i);
-        }
-        final int count = getChildCount(); //获取子View的个数
-        size = count;
-
-        for (int i = 0; i < count; i++) {
-            View view = getChildAt(i); //获取指定的子view
-            final int position = i;
-            views.add(view);
-            view.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //对子view添加点击事件
-                    if (position != selectItem) {
-                        if (isCanSwitchItem) setSelectItem(position);
-                    } else {
-                        if (isCanClickListener && onItemClickListener != null) {
-                            onItemClickListener.onItemClick(position, views.get(position));
-                        }
-                    }
-                }
-            });
-
-        }
-
-    }
-
-    /**
      * 复位
      */
     private void restPosition() {
@@ -341,7 +270,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
             return;
         }
         float finall = 0;
-        float part = 360 / size;//一份的角度
+        float part = 360f / size;//一份的角度
         if (angle < 0) {
             part = -part;
         }
@@ -383,26 +312,24 @@ public class LoopRotarySwitchView extends RelativeLayout {
             public void onAnimationUpdate(ValueAnimator animation) {
                 if (touching == false) {
                     angle = (Float) animation.getAnimatedValue();
-                    initView();
+                    updateLoopViews();
                 }
             }
         });
         restAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                isCanSwitchItem = false;
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                isCanSwitchItem = true;
                 if (touching == false) {
                     selectItem = calculateItem();
                     if (selectItem < 0) {
                         selectItem = size + selectItem;
                     }
                     if (onItemSelectedListener != null) {
-                        onItemSelectedListener.selected(selectItem, views.get(selectItem));
+                        onItemSelectedListener.selected(selectItem, getChildAt(selectItem));
                     }
                 }
             }
@@ -450,7 +377,20 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @return
      */
     private int calculateItem() {
-        return (int) (angle / (360 / size)) % size;
+//        int i = (int) (angle / (360f / size)) % size;
+//        return i >= 0 ? i : i + size;
+
+        int maxIndex = 0;
+        float maxScale = 0;
+        for (int i = 0; i < size; i++) {
+            View view = getChildAt(i);
+            float scaleX = view.getScaleX();
+            if (scaleX >= maxScale) {
+                maxScale = scaleX;
+                maxIndex = i;
+            }
+        }
+        return (int) getChildAt(maxIndex).getTag();
     }
 
     /**
@@ -485,9 +425,6 @@ public class LoopRotarySwitchView extends RelativeLayout {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (onLoopViewTouchListener != null) {
-            onLoopViewTouchListener.onTouch(event);
-        }
         isCanClickListener(event);
         return true;
     }
@@ -499,9 +436,6 @@ public class LoopRotarySwitchView extends RelativeLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         onTouch(ev);
-        if (onLoopViewTouchListener != null) {
-            onLoopViewTouchListener.onTouch(ev);
-        }
         isCanClickListener(ev);
         return super.dispatchTouchEvent(ev);
     }
@@ -516,7 +450,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
             case MotionEvent.ACTION_DOWN:
                 x = event.getX();
                 if (autoRotation) {
-                    loopHandler.removeMessages(LoopRotarySwitchViewHandler.msgid);
+                    loopHandler.removeMessages(LoopViewHandler.MSG_WHAT);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -524,25 +458,13 @@ public class LoopRotarySwitchView extends RelativeLayout {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 if (autoRotation) {
-                    loopHandler.sendEmptyMessageDelayed(LoopRotarySwitchViewHandler.msgid, loopHandler.loopTime);
+                    loopHandler.sendEmptyMessageDelayed(LoopViewHandler.MSG_WHAT, loopHandler.mLoopTime);
                 }
-                if (event.getX() - x > limitX || x - event.getX() > limitX) {
-                    isCanClickListener = false;
-                } else {
-                    isCanClickListener = true;
-                }
+                isCanClickListener = (event.getX() - x < limitX) ? true : false;
                 break;
         }
     }
 
-    /**
-     * 获取所有的view
-     *
-     * @return
-     */
-    public List<View> getViews() {
-        return views;
-    }
 
     /**
      * 获取角度
@@ -599,7 +521,6 @@ public class LoopRotarySwitchView extends RelativeLayout {
         return selectItem;
     }
 
-    int bottom = 0;
 
     /**
      * 设置指定位置
@@ -607,25 +528,32 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param pos
      */
     public void setSelectItem(int pos) {
-        if (pos < 0 || pos >= views.size()) {
+        int count = getChildCount();
+        int currentIndex = calculateItem();
+        if (currentIndex == pos) {
             return;
         }
-        bottom = calculateItem();
-        if (bottom == pos) {
-            Log.e("setToPos", "bottom");
+        //目标切换的view
+        View targetView = getChildAt(pos);
+        float perAngle;
+        //当前位置和目标位置的差值(不是直接相减 而是位置相差多少个距离）
+        int difPos;
+        if (targetView.getTranslationX() >= 0) {//在右边
+            if (pos >= currentIndex) {
+                difPos = Math.abs(pos - currentIndex);
+            } else {
+                difPos = Math.abs(pos + count - currentIndex);
+            }
+            perAngle = 360f / size;
+        } else {//在左边
+            if (currentIndex >= pos) {
+                difPos = Math.abs(currentIndex - pos);
+            } else {
+                difPos = Math.abs(currentIndex + count - pos);
+            }
+            perAngle = -360f / size;
         }
-        int difPos = bottom - pos;
-        if (difPos < 0 - Math.floor(views.size() / 2)) {
-            difPos += views.size();
-        }
-        if (difPos > Math.floor(views.size() / 2)) {
-            difPos -= views.size();
-        }
-        if (views.size() % 2 == 0 && difPos == views.size() / 2) {
-            difPos = 0 + views.size() / 2;
-        }
-        float angle1 = angle - difPos * 360 / views.size();
-        AnimRotationTo(angle1, null);
+        AnimRotationTo(angle + perAngle * difPos, null);
     }
 
 
@@ -634,7 +562,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
      *
      * @param r
      */
-    public LoopRotarySwitchView setR(float r) {
+    public LoopViewLayout setR(float r) {
         this.r = r;
         distance = multiple * r;
         return this;
@@ -658,21 +586,13 @@ public class LoopRotarySwitchView extends RelativeLayout {
         this.onItemClickListener = onItemClickListener;
     }
 
-    /**
-     * 触摸时间回调
-     *
-     * @param onLoopViewTouchListener
-     */
-    public void setOnLoopViewTouchListener(OnLoopViewTouchListener onLoopViewTouchListener) {
-        this.onLoopViewTouchListener = onLoopViewTouchListener;
-    }
 
     /**
      * 设置是否自动切换
      *
      * @param autoRotation
      */
-    public LoopRotarySwitchView setAutoRotation(boolean autoRotation) {
+    public LoopViewLayout setAutoRotation(boolean autoRotation) {
         this.autoRotation = autoRotation;
         loopHandler.setLoop(autoRotation);
         return this;
@@ -684,7 +604,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @return
      */
     public long getAutoRotationTime() {
-        return loopHandler.loopTime;
+        return loopHandler.mLoopTime;
     }
 
     /**
@@ -692,7 +612,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
      *
      * @param autoRotationTime
      */
-    public LoopRotarySwitchView setAutoRotationTime(long autoRotationTime) {
+    public LoopViewLayout setAutoRotationTime(long autoRotationTime) {
         loopHandler.setLoopTime(autoRotationTime);
         return this;
     }
@@ -712,13 +632,13 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param mMultiple
      * @return
      */
-    public LoopRotarySwitchView setMultiple(float mMultiple) {
+    public LoopViewLayout setMultiple(float mMultiple) {
         this.multiple = mMultiple;
         distance = multiple * r;
         return this;
     }
 
-    public LoopRotarySwitchView setAutoScrollDirection(AutoScrollDirection mAutoScrollDirection) {
+    public LoopViewLayout setAutoScrollDirection(AutoScrollDirection mAutoScrollDirection) {
         this.autoRotatinDirection = mAutoScrollDirection;
         return this;
     }
@@ -730,7 +650,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 loopRotationX = (Integer) animation.getAnimatedValue();
-                initView();
+                updateLoopViews();
             }
         });
         xAnimation.setInterpolator(new DecelerateInterpolator());
@@ -746,7 +666,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 loopRotationZ = (Integer) animation.getAnimatedValue();
-                initView();
+                updateLoopViews();
             }
         });
         zAnimation.setInterpolator(new DecelerateInterpolator());
@@ -761,12 +681,12 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param mOrientation
      * @return
      */
-    public LoopRotarySwitchView setOrientation(int mOrientation) {
+    public LoopViewLayout setOrientation(int mOrientation) {
         setHorizontal(mOrientation == horizontal, false);
         return this;
     }
 
-    public LoopRotarySwitchView setHorizontal(boolean horizontal, boolean anim) {
+    public LoopViewLayout setHorizontal(boolean horizontal, boolean anim) {
         if (anim) {
             if (horizontal) {
                 createZAnimation(getLoopRotationZ(), 0, true);
@@ -779,17 +699,17 @@ public class LoopRotarySwitchView extends RelativeLayout {
             } else {
                 setLoopRotationZ(90);
             }
-            initView();
+            updateLoopViews();
         }
         return this;
     }
 
-    public LoopRotarySwitchView setLoopRotationX(int loopRotationX) {
+    public LoopViewLayout setLoopRotationX(int loopRotationX) {
         this.loopRotationX = loopRotationX;
         return this;
     }
 
-    public LoopRotarySwitchView setLoopRotationZ(int loopRotationZ) {
+    public LoopViewLayout setLoopRotationZ(int loopRotationZ) {
         this.loopRotationZ = loopRotationZ;
         return this;
     }
@@ -824,5 +744,81 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     public ValueAnimator getxAnimation() {
         return xAnimation;
+    }
+
+
+    LoopViewAdapter mAdapter;
+
+    @Override
+    public LoopViewAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    @Override
+    public void setAdapter(LoopViewAdapter adapter) {
+        if (adapter == null) {
+            throw new RuntimeException("adapter must not be null");
+        }
+        if (mAdapter != null) {
+            throw new RuntimeException("you have already set an Adapter");
+        }
+        this.mAdapter = adapter;
+        mAdapter.setOnLoopViewChangeListener(this);
+    }
+
+    /**
+     * 重置
+     */
+    public void reset() {
+        removeAllViews();
+        selectItem = 0;
+        angle = 0;
+        last_angle = 0;
+    }
+
+    /**
+     * 初始化view
+     */
+    public void initLoopViews() {
+        reset();
+        if (mAdapter != null) {
+            size = mAdapter.getCount();
+            if (size == 0) return;
+            for (int i = 0; i < size; i++) {
+                View view = mAdapter.getView(i, getChildAt(i), this); //获取指定的子view
+                final int position = i;
+                view.setTag(i);
+                addView(view);
+                view.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //对子view添加点击事件
+                        if (position != selectItem) {
+                            setSelectItem(position);
+                        } else {
+                            if (isCanClickListener && onItemClickListener != null) {
+                                onItemClickListener.onItemClick(position, getChildAt(position));
+                            }
+                        }
+                    }
+                });
+
+            }
+        }
+    }
+
+
+    @Override
+    public void notifyDataSetChanged() {
+        initLoopViews();
+        updateLoopViews();
+        if (autoRotation) {
+            loopHandler.sendEmptyMessageDelayed(LoopViewHandler.MSG_WHAT, loopHandler.mLoopTime);
+        }
+
+        if (onItemSelectedListener != null) {
+            isCanClickListener = true;
+            onItemSelectedListener.selected(selectItem, getChildAt(selectItem));
+        }
     }
 }
